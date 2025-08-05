@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Carte Pluviométrique | IRN Rainsmore{% endblock %}
+{% block content %}
+<div class="container-fluid p-0">
+  <div id="map" style="height: 90vh; width: 100%;"></div>
+  <div id="loader" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:none;">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const map = L.map('map').setView([4.05, 9.7], 10);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(map);
+
+  const loader = document.getElementById('loader');
+  let markers = [];
+
+  function updateRain() {
+    loader.style.display = 'block';
+    fetch('/raincells')
+      .then(res => res.json())
+      .then(json => {
+        // Supprimer les anciens points
+        markers.forEach(m => map.removeLayer(m));
+        markers = [];
+
+        // Ajouter les nouveaux points
+        json.data.forEach(p => {
+          const marker = L.circleMarker([p.lat, p.lon], {
+            radius: Math.min(8, p.mm),
+            color: "blue",
+            fillColor: "blue",
+            fillOpacity: 0.5
+          }).bindPopup(`${p.mm.toFixed(1)} mm`);
+          marker.addTo(map);
+          markers.push(marker);
+        });
+
+        loader.style.display = 'none';
+      })
+      .catch(() => loader.style.display = 'none');
+  }
+
+  updateRain();
+  setInterval(updateRain, 5000);
+</script>
+{% endblock %}

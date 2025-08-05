@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}IRN Rainsmore - Accueil{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(to right, #004080, #0073e6);
+    color: white;
+    text-align: center;
+  }
+  header {
+    padding: 40px 0;
+  }
+  .btn-custom {
+    background-color: #ffcc00;
+    color: #004080;
+    font-weight: bold;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-size: 18px;
+    transition: 0.3s;
+  }
+  .btn-custom:hover {
+    background-color: #ffd633;
+  }
+</style>
+<header>
+  <h1 class="mb-3">Bienvenue sur la plateforme IRN Rainsmore</h1>
+  <p class="lead">Visualisez les données pluviométriques en temps réel</p>
+  <a href="/map" class="btn btn-custom mt-4">Accéder à la Carte</a>
+</header>
+{% endblock %}

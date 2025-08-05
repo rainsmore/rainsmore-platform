@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Environnements virtuels
+env/
+venv/
+.venv/
+
+# Données lourdes
+*.nc
+data/
+donnée/
+
+# Fichiers de configuration locaux
+*.env
+
+# Logs
+*.log
+
+# IDE / éditeurs
+.vscode/
+.idea/

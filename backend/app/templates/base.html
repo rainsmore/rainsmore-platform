@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}IRN Rainsmore{% endblock %}</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="/static/styles.css" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>IRN Rainsmore</h2>
+    <ul class="menu">
+      <li><a href="/" class="menu-item {% if request.url.path == '/' %}active{% endif %}">Accueil</a></li>
+      <li><a href="/map" class="menu-item {% if request.url.path.startswith('/map') %}active{% endif %}">Carte</a></li>
+      <li><a href="#" class="menu-item">Graphiques</a></li>
+      <li><a href="#" class="menu-item">Historique</a></li>
+    </ul>
+    <div class="filters">
+      <label for="min-mm">Pluie min (mm)</label>
+      <input type="number" id="min-mm" value="0" step="0.1" />
+      <label for="max-mm">Pluie max (mm)</label>
+      <input type="number" id="max-mm" value="100" step="0.1" />
+      <button onclick="updateRain()">Appliquer</button>
+      <button id="toggle-btn" onclick="toggleSimulation()">⏸ Pause</button>
+    </div>
+  </div>
+
+  <div id="map-container">
+    {% block content %}{% endblock %}
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</body>
+</html>
